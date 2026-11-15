@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --bg: #0b0d17; --ink: #f4f1ea; --dim: #9aa0b8; --line: #262a3d;
+    --coral: #ff6b4a; --gold: #ffc94a; --mint: #4ae3b5; --sky: #6aa8ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+  body { font-family: "Inter", sans-serif; color: var(--ink); position: relative; }
+  .mono { font-family: "JetBrains Mono", monospace; }
+  #bg { position: absolute; inset: 0; overflow: hidden; }
+  .blob { position: absolute; width: 900px; height: 900px; border-radius: 50%; filter: blur(140px); opacity: .45; }
+  #grid { position: absolute; inset: 0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 90px 90px; opacity: .35; }
+  .scene { position: absolute; inset: 0; padding: 0 90px; display: flex; flex-direction: column; justify-content: center; opacity: 0; }
+  .el { will-change: transform, opacity; }
+  .kicker { font-size: 40px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 36px; }
+  .big { font-family: "Inter Display", "Inter", sans-serif; font-size: 128px; line-height: 1.0; font-weight: 800; letter-spacing: -.035em; }
+  .mid { font-family: "Inter Display", "Inter", sans-serif; font-size: 84px; line-height: 1.05; font-weight: 800; letter-spacing: -.03em; }
+  .body { font-size: 46px; line-height: 1.35; color: var(--dim); font-weight: 500; margin-top: 40px; }
+  .hl { color: var(--coral); }
+  .hl2 { color: var(--mint); }
+  .num { font-family: "Inter Display", "Inter", sans-serif; font-size: 400px; font-weight: 900; letter-spacing: -.06em; line-height: .9; color: var(--gold); }
+  .repo { font-size: 50px; font-weight: 700; padding: 34px 40px; border: 3px solid var(--line); border-radius: 28px; background: #12152399; margin-top: 50px; font-size: 46px; line-height: 1.35; }
+  .repo .owner { color: var(--dim); font-weight: 500; }
+  .cats { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 50px; }
+  .cat { padding: 30px 32px; border-radius: 26px; background: #151829; border: 2px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+  .cat .n { font-size: 40px; font-weight: 600; }
+  .cat .c { font-family: "JetBrains Mono", monospace; font-size: 44px; font-weight: 800; color: var(--gold); }
+  .check { display: flex; align-items: center; gap: 28px; font-size: 50px; font-weight: 600; margin-top: 30px; }
+  .check .tick { width: 76px; height: 76px; border-radius: 50%; background: var(--mint); color: var(--bg); display: grid; place-items: center; font-size: 46px; font-weight: 900; flex: none; }
+  .bar { height: 30px; border-radius: 15px; background: #1b1f33; margin-top: 60px; position: relative; overflow: hidden; }
+  .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--mint), var(--gold), var(--coral)); border-radius: 15px; }
+  .barlbl { display: flex; justify-content: space-between; font-size: 40px; font-weight: 700; margin-top: 22px; }
+  .rank { display: flex; gap: 34px; align-items: flex-start; padding: 40px 0; border-bottom: 2px solid var(--line); }
+  .rank .medal { font-size: 110px; line-height: 1; flex: none; }
+  .rank h3 { font-size: 72px; font-weight: 800; letter-spacing: -.02em; }
+  .rank p { font-size: 40px; color: var(--dim); margin-top: 10px; line-height: 1.3; font-weight: 500; }
+  .rank .tag { display: inline-block; font-family: "JetBrains Mono", monospace; font-size: 34px; color: var(--mint); margin-top: 14px; }
+  .cta { background: var(--coral); color: var(--bg); font-size: 56px; font-weight: 800; padding: 36px 50px; border-radius: 999px; display: inline-block; margin-top: 70px; align-self: flex-start; }
+  #progress { position: absolute; left: 90px; right: 90px; bottom: 120px; height: 8px; background: #ffffff14; border-radius: 4px; }
+  #progress i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ink); border-radius: 4px; }
+  #brand { position: absolute; left: 90px; top: 130px; font-size: 34px; font-weight: 600; color: var(--dim); letter-spacing: .06em; }
+</style>
+</head>
+<body>
+<div id="bg">
+  <div class="blob" id="b1" style="background:#ff6b4a"></div>
+  <div class="blob" id="b2" style="background:#4a6bff"></div>
+  <div class="blob" id="b3" style="background:#4ae3b5"></div>
+  <div id="grid"></div>
+</div>
+<div id="brand" class="mono">▶ SKILL VIDEO AI</div>
+
+<!-- S1: hook -->
+<section class="scene" id="s1">
+  <div class="kicker el" data-d="0">Claude Code · Codex</div>
+  <div class="big el" data-d="0.15">Mau bikin video</div>
+  <div class="big el hl" data-d="0.35">cuma dengan</div>
+  <div class="big el hl" data-d="0.55">ngetik perintah?</div>
+</section>
+
+<!-- S2: count -->
+<section class="scene" id="s2">
+  <div class="kicker el" data-d="0">Ada daftarnya di GitHub</div>
+  <div class="num el" data-d="0.1"><span id="count">0</span></div>
+  <div class="mid el" data-d="0.4">skill video gratis,<br><span class="hl2">dikumpulkan jadi satu.</span></div>
+  <div class="repo mono el" data-d="0.8"><span class="owner">zhuyansen/</span><br>awesome-claude-video-skills</div>
+</section>
+
+<!-- S3: categories -->
+<section class="scene" id="s3">
+  <div class="kicker el" data-d="0">Dibagi per jenis</div>
+  <div class="mid el" data-d="0.1">Pilih sesuai<br>video yang kamu mau</div>
+  <div class="cats">
+    <div class="cat el" data-d="0.4"><span class="n">📣 Promo</span><span class="c">90</span></div>
+    <div class="cat el" data-d="0.5"><span class="n">🎓 Explainer</span><span class="c">88</span></div>
+    <div class="cat el" data-d="0.6"><span class="n">🧱 Framework</span><span class="c">86</span></div>
+    <div class="cat el" data-d="0.7"><span class="n">📱 Shorts</span><span class="c">66</span></div>
+    <div class="cat el" data-d="0.8"><span class="n">✂️ Editing</span><span class="c">61</span></div>
+    <div class="cat el" data-d="0.9"><span class="n">🎞 Motion</span><span class="c">40</span></div>
+    <div class="cat el" data-d="1.0"><span class="n">📖 Cerita</span><span class="c">35</span></div>
+    <div class="cat el" data-d="1.1"><span class="n">🎵 Musik</span><span class="c">18</span></div>
+    <div class="cat el" data-d="1.2"><span class="n">📝 Naskah</span><span class="c">10</span></div>
+    <div class="cat el" data-d="1.3"><span class="n">🧑‍💼 Avatar</span><span class="c">9</span></div>
+  </div>
+</section>
+
+<!-- S4: test -->
+<section class="scene" id="s4">
+  <div class="kicker el" data-d="0">Bukan cuma daftar</div>
+  <div class="mid el" data-d="0.1"><span class="hl">16 skill</span> diuji membuat video yang sama</div>
+  <div class="check el" data-d="0.6"><span class="tick">✓</span>Semua videonya bisa diputar</div>
+  <div class="check el" data-d="0.8"><span class="tick">✓</span>Durasi &amp; ukuran sesuai</div>
+  <div class="check el" data-d="1.0"><span class="tick">✓</span>Semua teks terbaca</div>
+  <div class="bar el" data-d="1.3"><i id="barfill"></i></div>
+  <div class="barlbl el" data-d="1.3"><span class="hl2">2 menit</span><span class="dim" style="color:var(--dim)">waktu pembuatan</span><span class="hl">23,5 menit</span></div>
+</section>
+
+<!-- S5: top 3 -->
+<section class="scene" id="s5">
+  <div class="kicker el" data-d="0">Pilihan mereka</div>
+  <div class="rank el" data-d="0.2"><div class="medal">🥇</div><div><h3>explainroo</h3><p>Paling cepat: brief jadi video bersuara dalam 2 menit.</p><span class="tag">vincentsch/explainroo</span></div></div>
+  <div class="rank el" data-d="0.9"><div class="medal">🥈</div><div><h3>onetake</h3><p>Satu ide mengalir tanpa potongan dari awal sampai akhir.</p><span class="tag">feitangyuan/onetake</span></div></div>
+  <div class="rank el" data-d="1.6" style="border:0"><div class="medal">🥉</div><div><h3>Remotion skills</h3><p>Skill resmi Remotion, render andal. Cocok kalau kamu punya desain sendiri.</p><span class="tag">remotion-dev/skills</span></div></div>
+</section>
+
+<!-- S6: tip -->
+<section class="scene" id="s6">
+  <div class="kicker el" data-d="0">Tapi ingat</div>
+  <div class="mid el" data-d="0.15">Video promo sederhana?</div>
+  <div class="mid el hl2" data-d="0.45">Claude Code tanpa skill pun bisa.</div>
+  <div class="body el" data-d="0.8">Lolos semua cek dalam 4,4 menit. Skill berguna kalau kamu butuh <b style="color:var(--ink)">gaya</b>, <b style="color:var(--ink)">alur kerja</b>, atau mau <b style="color:var(--ink)">mengedit rekaman</b>.</div>
+</section>
+
+<!-- S7: CTA -->
+<section class="scene" id="s7">
+  <div class="kicker el" data-d="0">Cek sendiri</div>
+  <div class="big el" data-d="0.1">Simpan &amp;<br><span class="hl">coba sekarang.</span></div>
+  <div class="repo mono el" data-d="0.4"><span class="owner">github.com/zhuyansen/</span><br>awesome-claude-video-skills</div>
+  <div class="body el" data-d="0.6">Tiap repo diberi nilai keamanan. Tetap baca isinya sebelum dipasang.</div>
+  <div class="cta el" data-d="0.9">⭐ Simpan video ini</div>
+</section>
+
+<div id="progress"><i id="pfill"></i></div>
+
+<script>
+  // Scene timeline in seconds: [id, start, end]
+  const SCENES = [["s1",0,4.2],["s2",4.2,10],["s3",10,17.5],["s4",17.5,24.5],["s5",24.5,33],["s6",33,38.5],["s7",38.5,44]];
+  window.DURATION = 44;
+  const clamp = (x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+  const easeOut = x => 1 - Math.pow(1 - x, 3);
+  const easeIn = x => x*x*x;
+
+  window.render = function (t) {
+    // background drift
+    const b = [["b1",-200,200,.11],["b2",500,900,.08],["b3",100,1500,.06]];
+    b.forEach(([id,x,y,s],i)=>{
+      const el = document.getElementById(id);
+      el.style.transform = `translate(${x + Math.sin(t*s*6+i)*180}px, ${y + Math.cos(t*s*5+i*2)*220}px)`;
+    });
+    document.getElementById("grid").style.transform = `translateY(${-(t*12)%90}px)`;
+    document.getElementById("pfill").style.width = (clamp(t/window.DURATION)*100)+"%";
+
+    SCENES.forEach(([id,s,e])=>{
+      const sc = document.getElementById(id);
+      const local = t - s, dur = e - s;
+      const visible = t >= s - 0.01 && t < e + 0.01;
+      sc.style.opacity = visible ? 1 : 0;
+      if (!visible) return;
+      const outP = clamp((local - (dur - 0.45)) / 0.45); // exit last 0.45s
+      sc.querySelectorAll(".el").forEach(el=>{
+        const d = parseFloat(el.dataset.d||0);
+        const p = easeOut(clamp((local - d) / 0.6));
+        const o = easeIn(outP);
+        el.style.opacity = p * (1 - o);
+        el.style.transform = `translateY(${(1-p)*70 - o*60}px) scale(${0.96 + 0.04*p})`;
+      });
+      if (id === "s2") {
+        const c = Math.round(503 * easeOut(clamp((local - 0.2) / 1.6)));
+        document.getElementById("count").textContent = c;
+      }
+      if (id === "s4") {
+        document.getElementById("barfill").style.width = (easeOut(clamp((local-1.5)/1.8))*100)+"%";
+      }
+    });
+  };
+  render(0);
+</script>
+</body>
+</html>
